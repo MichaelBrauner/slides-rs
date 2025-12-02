@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Slide {{ slide.current }}{% endblock %}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .slide h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #00d9ff;
+    }
+
+    .slide h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #ff6b6b;
+    }
+
+    .slide p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    .slide ul {
+      text-align: left;
+      font-size: 1.25rem;
+      line-height: 2;
+    }
+
+    .slide strong { color: #ffd93d; }
+    .slide em { color: #6bcb77; }
+    .slide code {
+      background: #2d2d44;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0,0,0,0.3);
+    }
+
+    nav a {
+      color: #00d9ff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid #00d9ff;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      background: #00d9ff;
+      color: #1a1a2e;
+    }
+
+    .nav-placeholder {
+      width: 80px;
+    }
+
+    .slide-counter {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    /* Speaker notes hidden by default */
+    .speaker-notes {
+      display: none;
+    }
+
+    /* Hide nav when embedded in presenter view */
+    .in-presenter nav {
+      display: none;
+    }
+
+    .in-presenter .slide {
+      padding-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="slide">
+    {% block content %}{% endblock %}
+  </main>
+
+  <nav>
+    {% if slide.prev %}
+      <a href="slide-{{ slide.prev }}.html">← Prev</a>
+    {% else %}
+      <span class="nav-placeholder"></span>
+    {% endif %}
+
+    <span class="slide-counter">{{ slide.current }} / {{ app.total }}</span>
+
+    {% if slide.next %}
+      <a href="slide-{{ slide.next }}.html">Next →</a>
+    {% else %}
+      <span class="nav-placeholder"></span>
+    {% endif %}
+  </nav>
+
+  <!-- Speaker notes (hidden, for presenter view) -->
+  <aside class="speaker-notes">
+    {% block notes %}{% endblock %}
+  </aside>
+
+  <script>
+    // Hide nav when in presenter view (embedded in iframe)
+    if (window.self !== window.top) {
+      document.body.classList.add('in-presenter');
+    }
+
+    // Simple keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      const current = {{ slide.current }};
+      const total = {{ app.total }};
+
+      // Arrow keys / vim style
+      if (e.key === 'ArrowRight' || e.key === 'j' || e.key === ' ') {
+        if (current < total) {
+          window.location.href = `slide-${current + 1}.html`;
+        }
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'k') {
+        if (current > 1) {
+          window.location.href = `slide-${current - 1}.html`;
+        }
+      }
+
+      // Home / End
+      if (e.key === 'Home') {
+        window.location.href = 'slide-1.html';
+      }
+      if (e.key === 'End') {
+        window.location.href = `slide-${total}.html`;
+      }
+
+      // P for presenter view
+      if (e.key === 'p') {
+        window.location.href = `presenter.html?slide=${current}`;
+      }
+
+      // O for overview
+      if (e.key === 'o') {
+        window.location.href = 'overview.html';
+      }
+    });
+  </script>
+</body>
+</html>

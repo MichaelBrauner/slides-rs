@@ -1,0 +1,11 @@
+default:
+  - slides/*.html
+
+# Sectioned deck example
+presentation:
+  intro:
+    - slides/01-intro.html
+  main:
+    - slides/02-features.html
+  outro:
+    - slides/03-end.html

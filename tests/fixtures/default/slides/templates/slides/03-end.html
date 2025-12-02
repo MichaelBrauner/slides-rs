@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "end.title" | trans }}{% endblock %}
+
+{% block content %}
+<h1>{{ "end.title" | trans }}</h1>
+<p>{{ "end.message" | trans }}</p>
+
+<p style="margin-top: 3rem;">
+  <a href="slide-1.html" style="color: #00d9ff;">↩ Back to start</a>
+</p>
+{% endblock %}
+
+{% block notes %}
+<h3>Closing</h3>
+<ul>
+  <li>Thank the audience</li>
+  <li>Open for questions</li>
+  <li>Share contact info</li>
+</ul>
+{% endblock %}

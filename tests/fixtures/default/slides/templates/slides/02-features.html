@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "features.title" | trans }}{% endblock %}
+
+{% block content %}
+<h1>{{ "features.title" | trans }}</h1>
+
+<ul>
+  <li>{{ "features.item1" | trans }}</li>
+  <li>{{ "features.item2" | trans }}</li>
+  <li>{{ "features.item3" | trans }}</li>
+</ul>
+
+<h2 style="margin-top: 2rem;">Debug Output</h2>
+{{ dump() }}
+{% endblock %}
+
+{% block notes %}
+<h3>Key Points</h3>
+<p>Explain each feature in detail.</p>
+<p>The dump() output shows all available template variables.</p>
+{% endblock %}

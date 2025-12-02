@@ -1,0 +1,14 @@
+# Deck configuration
+# Each deck defines which slides to include (glob patterns)
+
+# default:
+#   - "*.html"
+
+# Or use sections:
+# my-presentation:
+#   intro:
+#     - "01-*.html"
+#   main:
+#     - "02-*.html"
+#   conclusion:
+#     - "03-*.html"

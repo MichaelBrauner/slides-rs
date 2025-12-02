@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "intro.title" | trans }}{% endblock %}
+
+{% block content %}
+<h1>{{ "intro.title" | trans }}</h1>
+<p>{{ "intro.subtitle" | trans }}</p>
+
+<p style="margin-top: 2rem; font-size: 1rem; color: #888;">
+  Press <code>→</code> to navigate, <code>p</code> for presenter, <code>o</code> for overview
+</p>
+{% endblock %}
+
+{% block notes %}
+<ul>
+  <li>Welcome the audience</li>
+  <li>Introduce yourself briefly</li>
+  <li>Mention the agenda</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head><title>Intro</title></head>
+<body>
+  {% if slide.prev %}<a href="slide-{{ slide.prev }}.html">Prev</a>{% endif %}
+  <span>{{ slide.current }} / {{ app.total }}</span>
+  {% if slide.next %}<a href="slide-{{ slide.next }}.html">Next</a>{% endif %}
+  <h1>Welcome</h1>
+</body>
+</html>
