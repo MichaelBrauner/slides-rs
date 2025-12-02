@@ -79,24 +79,6 @@ Reference them with the `asset` function:
 <img src="{{ asset('images/logo.png') }}">
 ```
 
-### Translations
-
-YAML files in `slides/translations/` provide translation strings for the `trans` filter.
-
-```html
-<h1>{{ "welcome.title" | trans }}</h1>
-```
-
-```yaml
-# en.yaml
-welcome:
-  title: "Hello World"
-```
-
-```bash
-slides build --lang en
-```
-
 ### Decks
 
 `decks.yaml` defines which templates to include and in what order.
@@ -116,6 +98,24 @@ short-version:
 
 ```bash
 slides build --deck my-talk
+```
+
+### Translations
+
+YAML files in `slides/translations/` provide translation strings for the `trans` filter.
+
+```html
+<h1>{{ "welcome.title" | trans }}</h1>
+```
+
+```yaml
+# en.yaml
+welcome:
+  title: "Hello World"
+```
+
+```bash
+slides build --lang en
 ```
 
 ## Commands
