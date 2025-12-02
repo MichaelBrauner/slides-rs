@@ -6,8 +6,7 @@ use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
-use std::io::{self, Write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 // Convention over Configuration - Path constants
 const SLIDES_ROOT: &str = "slides";
@@ -463,123 +462,6 @@ fn copy_dir_recursive(src: &Path, dest: &Path) -> Result<(), String> {
 // Export Helper Functions
 // ============================================================================
 
-fn find_or_download_chrome() -> Result<PathBuf, String> {
-    let chrome_names = if cfg!(target_os = "windows") {
-        vec!["chrome.exe", "chromium.exe"]
-    } else {
-        vec!["google-chrome", "chromium", "chrome", "chromium-browser"]
-    };
-
-    for name in &chrome_names {
-        if let Ok(path) = which::which(name) {
-            return Ok(path);
-        }
-    }
-
-    let chrome_dir = dirs::home_dir()
-        .ok_or_else(|| "Could not find home directory".to_string())?
-        .join(".slides")
-        .join("chromium");
-
-    let chrome_bin = if cfg!(target_os = "windows") {
-        chrome_dir.join("chrome-win").join("chrome.exe")
-    } else if cfg!(target_os = "macos") {
-        chrome_dir
-            .join("chrome-mac")
-            .join("Chromium.app")
-            .join("Contents")
-            .join("MacOS")
-            .join("Chromium")
-    } else {
-        chrome_dir.join("chrome-linux").join("chrome")
-    };
-
-    if chrome_bin.exists() {
-        return Ok(chrome_bin);
-    }
-
-    println!();
-    println!("   Chrome/Chromium not found.");
-    println!("   Download Chromium automatically? (~150MB)");
-    print!("   [y/n]: ");
-    io::stdout().flush().map_err(|e| e.to_string())?;
-
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).map_err(|e| e.to_string())?;
-
-    if input.trim().to_lowercase() == "y" {
-        println!();
-        download_chromium(&chrome_dir)?;
-        Ok(chrome_bin)
-    } else {
-        Err("PDF export requires Chrome/Chromium.\n   Installation:\n   • Ubuntu/Debian: sudo apt install chromium-browser\n   • macOS: brew install chromium\n   • Windows: winget install Google.Chrome".to_string())
-    }
-}
-
-fn download_chromium(target_dir: &Path) -> Result<(), String> {
-    println!("📦 Downloading Chromium...");
-    println!();
-
-    let (url, archive_name) = if cfg!(target_os = "linux") {
-        (
-            "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1234567/chrome-linux.zip",
-            "chrome-linux.zip",
-        )
-    } else if cfg!(target_os = "macos") {
-        (
-            "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1234567/chrome-mac.zip",
-            "chrome-mac.zip",
-        )
-    } else if cfg!(target_os = "windows") {
-        (
-            "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1234567/chrome-win.zip",
-            "chrome-win.zip",
-        )
-    } else {
-        return Err("Platform not supported".to_string());
-    };
-
-    println!("   URL: {}", url);
-    println!("   Target: {}", target_dir.display());
-    println!();
-
-    let response = reqwest::blocking::get(url)
-        .map_err(|e| format!("Download failed: {}", e))?;
-
-    let _total_size = response.content_length().unwrap_or(0);
-    let bytes = response
-        .bytes()
-        .map_err(|e| format!("Could not read data: {}", e))?;
-
-    println!(
-        "   ✅ Download completed ({} MB)",
-        bytes.len() / 1_000_000
-    );
-    println!();
-
-    println!("📂 Extracting Chromium...");
-    fs::create_dir_all(target_dir)
-        .map_err(|e| format!("Could not create directory: {}", e))?;
-
-    let zip_path = target_dir.join(archive_name);
-    fs::write(&zip_path, &bytes).map_err(|e| format!("Could not write ZIP: {}", e))?;
-
-    let zip_file =
-        fs::File::open(&zip_path).map_err(|e| format!("Could not open ZIP: {}", e))?;
-
-    let mut archive =
-        zip::ZipArchive::new(zip_file).map_err(|e| format!("Invalid ZIP archive: {}", e))?;
-
-    archive
-        .extract(target_dir)
-        .map_err(|e| format!("Extraction failed: {}", e))?;
-
-    fs::remove_file(&zip_path).ok();
-
-    println!("   ✅ Chromium installed");
-    Ok(())
-}
-
 /// Generate PDF from thumbnail images
 fn generate_pdf_from_thumbnails(thumbnails_dir: &Path, slide_count: usize) -> Result<Vec<u8>, String> {
     use printpdf::*;
@@ -662,54 +544,6 @@ fn generate_pdf_from_thumbnails(thumbnails_dir: &Path, slide_count: usize) -> Re
         .map_err(|e| format!("Could not generate PDF: {}", e))?;
 
     Ok(buf.into_inner().map_err(|e| format!("Buffer error: {}", e))?)
-}
-
-fn generate_pdf_with_chrome(chrome_path: &Path) -> Result<Vec<u8>, String> {
-    use headless_chrome::types::PrintToPdfOptions;
-    use headless_chrome::Browser;
-    use std::env;
-
-    let browser = Browser::new(headless_chrome::LaunchOptions {
-        headless: true,
-        sandbox: false,
-        path: Some(chrome_path.to_path_buf()),
-        ..Default::default()
-    })
-    .map_err(|e| format!("Could not start Chrome: {}", e))?;
-
-    let tab = browser
-        .new_tab()
-        .map_err(|e| format!("Could not open tab: {}", e))?;
-
-    let print_path = env::current_dir()
-        .map_err(|e| format!("Could not determine current directory: {}", e))?
-        .join("output")
-        .join("print.html");
-
-    let url = format!("file://{}", print_path.display());
-
-    tab.navigate_to(&url)
-        .map_err(|e| format!("Could not load HTML: {}", e))?;
-
-    tab.wait_until_navigated()
-        .map_err(|e| format!("Timeout while loading: {}", e))?;
-
-    let pdf_data = tab
-        .print_to_pdf(Some(PrintToPdfOptions {
-            landscape: Some(false),
-            print_background: Some(true),
-            scale: Some(1.0),
-            paper_width: Some(7.5),
-            paper_height: Some(13.33),
-            margin_top: Some(0.0),
-            margin_bottom: Some(0.0),
-            margin_left: Some(0.0),
-            margin_right: Some(0.0),
-            ..Default::default()
-        }))
-        .map_err(|e| format!("PDF generation failed: {}", e))?;
-
-    Ok(pdf_data)
 }
 
 fn generate_secure_password() -> String {
