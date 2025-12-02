@@ -42,9 +42,9 @@ where
 #[serial]
 fn test_full_build_workflow() {
     with_fixtures(|| {
-        // Build the presentation
+        // Build the presentation (fast, without thumbnails for CI compatibility)
         let mut deck = Deck::new("default", "en");
-        deck.build().expect("build() should succeed");
+        deck.build_fast().expect("build_fast() should succeed");
 
         // Verify output directory exists
         assert!(Path::new("output").exists(), "output/ directory should exist");
@@ -75,7 +75,7 @@ fn test_full_build_workflow() {
 fn test_build_generates_correct_slide_count() {
     with_fixtures(|| {
         let mut deck = Deck::new("default", "en");
-        deck.build().expect("build() should succeed");
+        deck.build_fast().expect("build_fast() should succeed");
 
         // Count generated slide files
         let slide_count = fs::read_dir("output")
@@ -99,7 +99,7 @@ fn test_build_generates_correct_slide_count() {
 fn test_build_includes_navigation() {
     with_fixtures(|| {
         let mut deck = Deck::new("default", "en");
-        deck.build().expect("build() should succeed");
+        deck.build_fast().expect("build_fast() should succeed");
 
         // Middle slide (slide 2) should have both prev and next
         let slide2 = fs::read_to_string("output/slide-2.html").unwrap();
@@ -110,6 +110,27 @@ fn test_build_includes_navigation() {
         assert!(
             slide2.contains("slide-3.html"),
             "Slide 2 should link to next"
+        );
+    });
+}
+
+#[test]
+#[serial]
+fn test_build_fast_skips_thumbnails() {
+    with_fixtures(|| {
+        let mut deck = Deck::new("default", "en");
+        deck.build_fast().expect("build_fast() should succeed");
+
+        // build_fast() should NOT generate thumbnails
+        assert!(
+            !Path::new("output/thumbnails").exists(),
+            "build_fast() should skip thumbnail generation"
+        );
+
+        // But HTML should still be generated
+        assert!(
+            Path::new("output/slide-1.html").exists(),
+            "HTML slides should still be generated"
         );
     });
 }

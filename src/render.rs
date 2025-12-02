@@ -638,8 +638,15 @@ pub fn generate_thumbnails(output_dir: &Path, total_slides: usize) -> Result<(),
         .map_err(|e| format!("Could not create thumbnails directory: {}", e))?;
 
     // Start browser
-    let browser = Browser::default()
-        .map_err(|e| format!("Could not start browser (Chrome/Chromium required): {}", e))?;
+    let browser = Browser::default().map_err(|e| {
+        let install_hint = get_chrome_install_hint();
+        format!(
+            "Could not start browser: {}\n\n\
+            Chrome/Chromium is required for thumbnail generation.\n\n\
+            {}",
+            e, install_hint
+        )
+    })?;
 
     let tab = browser
         .new_tab()
@@ -764,6 +771,37 @@ pub fn generate_thumbnails(output_dir: &Path, total_slides: usize) -> Result<(),
 
     println!("✅ {} thumbnails", total_slides);
     Ok(())
+}
+
+/// Returns OS-specific Chrome installation instructions
+fn get_chrome_install_hint() -> &'static str {
+    #[cfg(target_os = "windows")]
+    {
+        "Install Chrome or Edge:\n\
+         • Download from https://www.google.com/chrome/\n\
+         • Or use: winget install Google.Chrome"
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        "Install Chrome or Chromium:\n\
+         • Download from https://www.google.com/chrome/\n\
+         • Or use: brew install --cask google-chrome"
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        "Install Chrome or Chromium:\n\
+         • Ubuntu/Debian: sudo apt install chromium-browser\n\
+         • Fedora: sudo dnf install chromium\n\
+         • Arch: sudo pacman -S chromium\n\
+         • Or download from https://www.google.com/chrome/"
+    }
+
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    {
+        "Install Chrome or Chromium from https://www.google.com/chrome/"
+    }
 }
 
 #[cfg(test)]

@@ -117,6 +117,14 @@ impl Deck {
     }
 
     pub fn build(&mut self) -> Result<(), String> {
+        self.build_internal(false)
+    }
+
+    pub fn build_fast(&mut self) -> Result<(), String> {
+        self.build_internal(true)
+    }
+
+    fn build_internal(&mut self, skip_thumbnails: bool) -> Result<(), String> {
         println!("🎬 Generate Presentation");
         println!();
 
@@ -218,8 +226,10 @@ impl Deck {
         }
         println!("✅");
 
-        // Step 5a: Generate thumbnails
-        render::generate_thumbnails(output_dir, self.slides.len())?;
+        // Step 5a: Generate thumbnails (skip in watch mode for speed)
+        if !skip_thumbnails {
+            render::generate_thumbnails(output_dir, self.slides.len())?;
+        }
 
         // Step 6: Copy assets (if available)
         let assets_src = Path::new(SLIDES_ROOT).join("assets");
@@ -253,9 +263,9 @@ impl Deck {
         println!("─────────────────────────────────────────────────────");
         println!();
 
-        // Initial build
+        // Initial build (fast, without thumbnails)
         println!("🔨 Initial build...");
-        if let Err(e) = self.build() {
+        if let Err(e) = self.build_fast() {
             eprintln!("❌ Error: {}", e);
         }
         println!();
@@ -307,7 +317,7 @@ impl Deck {
 
                             println!();
                             println!("🔨 Rebuilding...");
-                            match self.build() {
+                            match self.build_fast() {
                                 Ok(_) => {
                                     println!();
                                     println!("─────────────────────────────────────────────────────");
