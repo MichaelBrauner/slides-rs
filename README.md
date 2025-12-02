@@ -15,6 +15,10 @@ Static site generator for HTML presentations.
 
 See [Installation Guide](documentation/installation.md) for Windows, Linux, and macOS.
 
+## Requirements
+
+- **Chrome, Chromium, or Microsoft Edge** (for overview page and PDF export)
+
 ## Quick Start
 
 ```bash

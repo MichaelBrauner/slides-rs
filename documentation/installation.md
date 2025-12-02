@@ -22,7 +22,7 @@ Download the binary for your platform from the [Releases](https://github.com/Mic
 
 ## Requirements
 
-- **PDF Export**: Requires Chrome, Chromium, or Microsoft Edge
+- **Chrome, Chromium, or Microsoft Edge** (for overview page and PDF export)
 
 # Uninstall
 
