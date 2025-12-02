@@ -21,7 +21,7 @@ Static site generator for HTML presentations.
 | **Multi-language** | Manual copy | One source, N languages |
 | **Reusability** | Copy & paste | Macros, includes, extends |
 | **Automation** | Difficult | CI/CD, scripting |
-| **AI integration** | Copilot (limited) | Text-based (full) |
+| **AI integration** | Limited (Copilot) | Full (text-based) |
 | **Learning curve** | Low | Higher (HTML, Git) |
 | **WYSIWYG** | Yes | No (browser preview) |
 | **Offline** | Yes | Yes |
