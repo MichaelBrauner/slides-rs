@@ -26,8 +26,11 @@ pub fn init() -> Result<(), String> {
         );
     }
 
-    create_dir("templates")?;
-    println!("   ✅ templates/ created");
+    create_dir("slides/templates")?;
+    println!("   ✅ slides/templates/ created");
+
+    create_dir("slides/assets")?;
+    println!("   ✅ slides/assets/ created");
 
     write_file(".gitignore", INIT_GITIGNORE_FILE)?;
     println!("   ✅ .gitignore created");

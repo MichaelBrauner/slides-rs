@@ -16,7 +16,8 @@ fn test_init_creates_required_files() {
     env::set_current_dir(temp_dir.path()).unwrap();
     project::init().expect("init should succeed");
 
-    assert!(Path::new("templates").exists(), "Should create templates directory");
+    assert!(Path::new("slides/templates").exists(), "Should create slides/templates directory");
+    assert!(Path::new("slides/assets").exists(), "Should create slides/assets directory");
     assert!(Path::new(".gitignore").exists(), "Should create .gitignore");
     assert!(Path::new("decks.yaml").exists(), "Should create decks.yaml");
 
