@@ -13,19 +13,7 @@ Static site generator for HTML presentations.
 
 ## Why Slides RS?
 
-|  | PowerPoint | Slides RS |
-|---|---|---|
-| **Format** | Binary (.pptx) | Text (HTML/YAML) |
-| **Versioning** | "final_v3_NEW.pptx" | Git (diffs, blame, PRs) |
-| **Collaboration** | OneDrive/SharePoint | Git (GitHub, GitLab) |
-| **Multi-language** | Manual copy | One source, N languages |
-| **Reusability** | Copy & paste | Macros, includes, extends |
-| **Automation** | Difficult | CI/CD, scripting |
-| **AI integration** | Limited (Copilot) | Full (text-based) |
-| **Learning curve** | Low | Higher (HTML, Git) |
-| **WYSIWYG** | Yes | No (browser preview) |
-| **Offline** | Yes | Yes |
-| **Cost** | Microsoft 365 | Free (MIT) |
+See [Comparison to PowerPoint](documentation/comparison.md) for a detailed comparison.
 
 ## Installation
 
@@ -65,8 +53,21 @@ Slides live in `slides/templates/` as HTML files with [MiniJinja](https://docs.r
   <h1>Hello World</h1>
   <p>{{ intro | markdown }}</p>
   <pre><code>{{ source("code/example.js") }}</code></pre>
+
+  {# Debug: show all available variables #}
+  {{ dump() }}
 {% endblock %}
 ```
+
+**Available filters and functions:**
+
+- `{{ text | markdown }}` - Render Markdown to HTML
+- `{{ "key" | trans }}` - Translate using translation files
+- `{{ variable | dump }}` - Debug output for a variable
+- `{{ dump() }}` - Debug output for all template variables
+- `{{ dump(variable) }}` - Debug output for a specific variable
+- `{{ asset("path/to/file") }}` - Reference asset files
+- `{{ source("path/to/file") }}` - Include source code from file
 
 *Supported extensions: `.html`, `.twig`, `.jinja2`, `.html.twig`, `.html.jinja`*
 
