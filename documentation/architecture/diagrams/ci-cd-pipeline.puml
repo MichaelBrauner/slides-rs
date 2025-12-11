@@ -1,0 +1,26 @@
+@startuml ci-cd-pipeline
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+Deployment_Node(github, "GitHub") {
+    Deployment_Node(actions, "GitHub Actions") {
+        Container(linux_runner, "Linux Runner", "ubuntu-latest", "Builds x86_64-linux-gnu")
+        Container(macos_arm_runner, "macOS Runner", "macos-14 (ARM)", "Builds aarch64-apple-darwin")
+        Container(macos_intel_runner, "macOS Runner", "macos-14", "Cross-compiles x86_64-apple-darwin")
+        Container(windows_runner, "Windows Runner", "windows-latest", "Builds x86_64-pc-windows-msvc")
+    }
+
+    Deployment_Node(releases, "GitHub Releases") {
+        Container(artifacts, "Release Artifacts", "Binaries", "4 platform binaries + checksums")
+    }
+}
+
+Deployment_Node(user, "User") {
+    Container(download, "Download", "curl / browser", "Fetches binary for platform")
+}
+
+Rel(linux_runner, artifacts, "Uploads")
+Rel(macos_arm_runner, artifacts, "Uploads")
+Rel(macos_intel_runner, artifacts, "Uploads")
+Rel(windows_runner, artifacts, "Uploads")
+Rel(user, artifacts, "Downloads")
+@enduml

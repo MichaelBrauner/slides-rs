@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presenter View - Slide {{ slide.current }}</title>
+    <link rel="stylesheet" href="{{ asset('presenter.css') }}">
+</head>
+<body>
+<div class="current-slide">
+    <iframe src="../slide-{{ slide.current }}.html"></iframe>
+</div>
+
+<div class="sidebar">
+    <div class="next-preview">
+        <h3>Next Slide</h3>
+        {% if not slide.isLast %}
+        <img src="../thumbnails/slide-{{ slide.next }}.png" alt="Next slide">
+        {% else %}
+        <p><em>Last slide</em></p>
+        {% endif %}
+    </div>
+
+    <div class="notes">
+        <h3>Speaker Notes</h3>
+        <div class="notes-content">
+            {% if notes %}
+            {{ notes | safe }}
+            {% else %}
+            <em>No notes for this slide</em>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <div class="timer" id="timer">00:00:00</div>
+
+    <div class="slide-info">
+        Slide {{ slide.current }} / {{ app.total }}
+    </div>
+
+    <div class="nav-buttons">
+        {% if not slide.isFirst %}
+        <a href="slide-{{ slide.prev }}.html" class="nav-btn">← Prev</a>
+        {% else %}
+        <span class="nav-btn disabled">← Prev</span>
+        {% endif %}
+
+        {% if not slide.isLast %}
+        <a href="slide-{{ slide.next }}.html" class="nav-btn">Next →</a>
+        {% else %}
+        <span class="nav-btn disabled">Next →</span>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    const currentSlide = {
+    {
+        slide.current
+    }
+    }
+    ;
+    const totalSlides = {
+    {
+        app.total
+    }
+    }
+    ;
+
+    // Persist timer across page navigations using sessionStorage
+    let startTime = sessionStorage.getItem('presenterStartTime');
+    if (!startTime) {
+        startTime = Date.now();
+        sessionStorage.setItem('presenterStartTime', startTime);
+    } else {
+        startTime = parseInt(startTime);
+    }
+
+    setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+        const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+        const s = String(elapsed % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if ((e.key === 'ArrowRight' || e.key === 'j' || e.key === ' ') && currentSlide < totalSlides) {
+            window.location.href = `slide-${currentSlide + 1}.html`;
+        }
+        if ((e.key === 'ArrowLeft' || e.key === 'k') && currentSlide > 1) {
+            window.location.href = `slide-${currentSlide - 1}.html`;
+        }
+        if (e.key === 'Home') window.location.href = 'slide-1.html';
+        if (e.key === 'End') window.location.href = `slide-${totalSlides}.html`;
+        if (e.key === 'o') window.location.href = '../overview.html';
+        if (e.key === 'Escape') window.location.href = `../slide-${currentSlide}.html`;
+    });
+</script>
+</body>
+</html>

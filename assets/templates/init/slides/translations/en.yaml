@@ -1,0 +1,71 @@
+# English translations
+
+welcome:
+  title: "Welcome to Slides RS"
+  subtitle: "Create beautiful presentations with web technologies"
+  page_title: "Slides RS — Presentations with Web Technologies"
+  notes: |
+    **slides-rs** is a static site generator for presentations.
+    - No server required
+    - Just HTML files you can open *anywhere*
+
+features:
+  title: "Features"
+  git: "**Git-Ready** — Plain text, perfect for version control & collaboration"
+  ai: "**AI-Ready** — AI assistants can read, generate & edit your slides"
+  templating: "**Templates** — Reuse everything, everywhere"
+  markdown: "**Markdown Support** — Write *formatted* text easily"
+  translations: "**Translations** — Multi-language presentations"
+  export: "**PDF Export** — Pixel-perfect, with optional password protection"
+  notes: |
+    **Git-Ready:** Plain text for version control & collaboration.
+    **AI-Ready:** Formats that LLMs can read, generate & edit.
+
+quickstart:
+  title: "Quick Start"
+  description: "Your workflow:"
+  notes: |
+    Three commands: `build`, `watch`, `export`.
+    Output is plain HTML — open directly or serve with any server.
+
+structure:
+  title: "Project Structure"
+  description: "A simple, intuitive layout:"
+  notes: |
+    `decks.yaml` defines which slides to include and in what order.
+    Everything lives in the `slides/` folder.
+
+templates:
+  title: "Writing Templates"
+  description: "Templates use Jinja2 syntax with `extends` and `blocks`:"
+  speaker_notes_placeholder: "Speaker notes go here"
+  notes: |
+    - Use `extends` to inherit layouts
+    - `block` lets you override specific sections
+    - `notes` block = speaker notes in presenter view
+
+translations:
+  title: "Translations"
+  description: "Use the `trans` filter for multilingual presentations:"
+  notes: |
+    One deck, **multiple languages**.
+    Build with: `slides build --lang de`
+
+nav:
+  previous: "← Previous"
+  next: "Next →"
+  navigate: "Navigate"
+  overview: "Overview"
+  presenter: "Presenter"
+  prev: "← Prev"
+  exit: "Exit"
+
+overview:
+  title: "Overview"
+  heading: "Slide Overview"
+
+presenter:
+  title: "Presenter Mode"
+  notes: "Speaker Notes"
+  no_notes: "No notes for this slide."
+  slide: "Slide"

@@ -1,0 +1,13 @@
+intro:
+  title: "Willkommen bei **Slides**"
+  subtitle: "Ein *einfaches* Präsentationstool in Rust"
+
+features:
+  title: "Hauptfeatures"
+  item1: "**Template-Vererbung** mit Jinja2-Syntax"
+  item2: "*Übersetzungen* mit Markdown-Support"
+  item3: "Speaker Notes und `dump()` Debugging"
+
+end:
+  title: "Vielen Dank!"
+  message: "Fragen? Einfach **fragen**!"

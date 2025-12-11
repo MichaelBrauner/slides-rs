@@ -1,0 +1,71 @@
+# German translations
+
+welcome:
+  title: "Willkommen bei Slides RS"
+  subtitle: "Erstelle Präsentationen mit Webtechnologien"
+  page_title: "Slides RS — Präsentationen mit Webtechnologien"
+  notes: |
+    **slides-rs** ist ein Static Site Generator für Präsentationen.
+    - Kein Server nötig
+    - Einfach HTML-Dateien, die *überall* funktionieren
+
+features:
+  title: "Features"
+  git: "**Git-Ready** — Plain Text, perfekt für Versionskontrolle & Teamarbeit"
+  ai: "**AI-Ready** — KI kann deine Slides lesen, generieren & bearbeiten"
+  templating: "**Templates** — Alles überall wiederverwenden"
+  markdown: "**Markdown Support** — Schreibe *formatierten* Text"
+  translations: "**Übersetzungen** — Mehrsprachige Präsentationen"
+  export: "**PDF Export** — Pixelgenau, optional mit Passwortschutz"
+  notes: |
+    **Git-Ready:** Plain Text für Versionskontrolle & Teamarbeit.
+    **AI-Ready:** Formate, die KI lesen, generieren & bearbeiten kann.
+
+quickstart:
+  title: "Schnellstart"
+  description: "Dein Workflow:"
+  notes: |
+    Drei Befehle: `build`, `watch`, `export`.
+    Output ist pures HTML — direkt öffnen oder mit beliebigem Server.
+
+structure:
+  title: "Projektstruktur"
+  description: "Ein einfaches, intuitives Layout:"
+  notes: |
+    `decks.yaml` definiert welche Slides in welcher Reihenfolge.
+    Alles liegt im `slides/` Ordner.
+
+templates:
+  title: "Templates schreiben"
+  description: "Templates nutzen Jinja2-Syntax mit `extends` und `blocks`:"
+  speaker_notes_placeholder: "Hier kommen Sprechernotizen hin"
+  notes: |
+    - Mit `extends` Layouts erben
+    - `block` überschreibt Sektionen
+    - `notes` Block = Sprechernotizen im Präsentationsmodus
+
+translations:
+  title: "Übersetzungen"
+  description: "Nutze den `trans` Filter für mehrsprachige Präsentationen:"
+  notes: |
+    Ein Deck, **mehrere Sprachen**.
+    Build mit: `slides build --lang de`
+
+nav:
+  previous: "← Zurück"
+  next: "Weiter →"
+  navigate: "Navigation"
+  overview: "Übersicht"
+  presenter: "Präsentator"
+  prev: "← Zurück"
+  exit: "Beenden"
+
+overview:
+  title: "Übersicht"
+  heading: "Folienübersicht"
+
+presenter:
+  title: "Präsentationsmodus"
+  notes: "Notizen"
+  no_notes: "Keine Notizen für diese Folie."
+  slide: "Folie"

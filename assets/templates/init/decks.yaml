@@ -1,0 +1,13 @@
+# Slides-rs Deck Configuration
+# Each deck defines which slides to include
+
+default:
+  intro:
+    - slides/welcome.html.twig
+    - slides/features.html.twig
+  getting-started:
+    - slides/quick-start.html.twig
+    - slides/project-structure.html.twig
+    - slides/writing-templates.html.twig
+  advanced:
+    - slides/translations.html.twig

@@ -1,0 +1,137 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #111;
+  color: #eee;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Main slide - large preview */
+.current-slide {
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.current-slide iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Sidebar with next preview and notes */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 0;
+}
+
+/* Next slide preview */
+.next-preview {
+  background: #222;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.next-preview h3 {
+  color: #888;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.next-preview img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+/* Speaker notes */
+.notes {
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.notes h3 {
+  color: #00d9ff;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.notes-content {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.notes-content ul,
+.notes-content ol {
+  margin-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.notes-content li {
+  margin-bottom: 0.2rem;
+}
+
+.notes-content p {
+  margin-bottom: 0.5rem;
+}
+
+.notes-content h3 {
+  color: #ffd93d;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Bottom controls */
+.controls {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.timer {
+  font-size: 1.5rem;
+  font-family: monospace;
+  color: #00d9ff;
+}
+
+.slide-info {
+  font-size: 1.25rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nav-buttons button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: #00d9ff;
+  color: #111;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-buttons button:hover {
+  background: #00b8d4;
+}

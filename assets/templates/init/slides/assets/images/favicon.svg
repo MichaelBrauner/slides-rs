@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Slide frame -->
+  <rect x="2" y="4" width="28" height="21" rx="2" fill="#1a1a2e" stroke="#e94560" stroke-width="2"/>
+
+  <!-- Screen/content area -->
+  <rect x="5" y="7" width="22" height="15" rx="1" fill="#16213e"/>
+
+  <!-- RS text -->
+  <text x="16" y="18" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#e94560" text-anchor="middle">RS</text>
+
+  <!-- Projector stand -->
+  <path d="M14 25 L16 28 L18 25" stroke="#e94560" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

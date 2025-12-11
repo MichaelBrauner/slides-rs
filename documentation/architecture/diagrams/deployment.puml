@@ -1,0 +1,23 @@
+@startuml deployment
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+Deployment_Node(user_machine, "User's Machine", "Linux / macOS / Windows") {
+    Deployment_Node(cli, "CLI") {
+        Container(slides, "slides", "Rust Binary", "Single static executable (~15MB)")
+    }
+
+    Deployment_Node(browser, "Browser Runtime") {
+        Container(chrome, "Chrome / Chromium / Edge", "Browser", "Required for thumbnails and PDF export")
+    }
+
+    Deployment_Node(fs, "File System") {
+        Container(project, "Project Files", "Directory", "decks.yaml, templates/, assets/, translations/")
+        Container(output, "Output", "Directory", "Generated HTML, thumbnails, PDF")
+    }
+}
+
+Rel(slides, chrome, "Controls via", "DevTools Protocol")
+Rel(slides, project, "Reads")
+Rel(slides, output, "Writes")
+Rel(chrome, output, "Reads HTML, writes PNG")
+@enduml

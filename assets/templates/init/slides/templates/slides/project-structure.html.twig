@@ -1,0 +1,22 @@
+{% extends "layouts/centered.html.twig" %}
+
+{% block title %}{{ "structure.title" | trans }}{% endblock %}
+{% block heading %}{{ "structure.title" | trans }}{% endblock %}
+
+{% block content %}
+    <p>{{ "structure.description" | trans }}</p>
+
+    <pre><code>my-presentation/
+├── decks.yaml
+└── slides/
+    ├── templates/
+    │   ├── _base.html
+    │   └── intro.html
+    ├── assets/
+    │   └── css/style.css
+    └── translations/
+        ├── en.yaml
+        └── de.yaml</code></pre>
+{% endblock %}
+
+{% block notes %}{{ "structure.notes" | trans }}{% endblock %}

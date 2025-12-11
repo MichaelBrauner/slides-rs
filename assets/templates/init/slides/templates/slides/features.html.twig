@@ -1,0 +1,21 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}{{ "features.title" | trans }}{% endblock %}
+
+{% block body %}
+<div class="slide slide--features">
+  <div class="features-logo">
+    <img src="{{ asset('images/favicon.svg') }}" alt="Slides RS">
+  </div>
+  <ul>
+    <li>{{ "features.git" | trans | markdown }}</li>
+    <li>{{ "features.ai" | trans | markdown }}</li>
+    <li>{{ "features.templating" | trans | markdown }}</li>
+    <li>{{ "features.markdown" | trans | markdown }}</li>
+    <li>{{ "features.translations" | trans | markdown }}</li>
+    <li>{{ "features.export" | trans | markdown }}</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block notes %}{{ "features.notes" | trans }}{% endblock %}

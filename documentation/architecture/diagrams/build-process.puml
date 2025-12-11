@@ -1,0 +1,23 @@
+@startuml build-process
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+actor User
+participant "CLI" as CLI
+participant "Render Engine" as Render
+participant "Chrome" as Chrome
+database "File System" as FS
+
+User -> CLI: slides build
+
+CLI -> FS: read config + templates + translations
+CLI -> Render: process templates
+Render --> CLI: HTML pages
+
+CLI -> FS: write HTML + copy assets
+
+CLI -> Chrome: generate thumbnails
+Chrome -> FS: capture screenshots
+Chrome --> CLI: done
+
+CLI --> User: Build complete
+@enduml

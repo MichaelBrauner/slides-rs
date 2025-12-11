@@ -1,0 +1,21 @@
+{% extends "layouts/centered.html.twig" %}
+
+{% block title %}{{ "templates.title" | trans }}{% endblock %}
+{% block heading %}{{ "templates.title" | trans }}{% endblock %}
+
+{% block content %}
+<p>{{ "templates.description" | trans | markdown }}</p>
+
+<pre><code class="language-html">{{ "{% extends \"_base.html\" %}" }}
+
+{{ "{% block content %}" }}
+  &lt;h1&gt;{{ "{{ title }}" }}&lt;/h1&gt;
+  &lt;p&gt;{{ "{{ \"**Bold** and *italic*\" | markdown }}" }}&lt;/p&gt;
+{{ "{% endblock %}" }}
+
+{{ "{% block notes %}" }}
+  {{ "templates.speaker_notes_placeholder" | trans }}
+{{ "{% endblock %}" }}</code></pre>
+{% endblock %}
+
+{% block notes %}{{ "templates.notes" | trans }}{% endblock %}

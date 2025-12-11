@@ -1,0 +1,22 @@
+{% extends "layouts/title.html.twig" %}
+
+{% block title %}{{ "welcome.page_title" | trans }}{% endblock %}
+{% block heading %}{{ "welcome.title" | trans }}{% endblock %}
+{% block subtitle %}{{ "welcome.subtitle" | trans }}{% endblock %}
+
+{% block footer %}
+<div class="nav-hints">
+  <p class="nav-keys">
+    <span><kbd>←</kbd> <kbd>→</kbd> {{ "nav.navigate" | trans }}</span>
+    <span><kbd>O</kbd> {{ "nav.overview" | trans }}</span>
+    <span><kbd>P</kbd> {{ "nav.presenter" | trans }}</span>
+  </p>
+  <p class="nav-vim">
+    <span class="vim-label">vim</span>
+    <kbd>h</kbd> <kbd>l</kbd>
+    <kbd>gg</kbd> <kbd>G</kbd>
+  </p>
+</div>
+{% endblock %}
+
+{% block notes %}{{ "welcome.notes" | trans }}{% endblock %}

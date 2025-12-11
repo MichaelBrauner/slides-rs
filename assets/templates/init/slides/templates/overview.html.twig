@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ "overview.title" | trans }}</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+<div class="overview">
+    <h1>{{ "overview.heading" | trans }}</h1>
+    {% for section in sections %}
+        {% if section.key %}<h2 class="section-title">{{ section.key }}</h2>{% endif %}
+        <div class="overview-grid">
+            {% for slide in section.slides %}
+                <a href="slide-{{ slide.number }}.html" class="overview-card">
+                    <div class="card-thumb">
+                        <img src="thumbnails/slide-{{ slide.number }}.png" alt="Slide {{ slide.number }}">
+                    </div>
+                    <div class="card-footer">{{ slide.number }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') location.href = 'slide-1.html';
+    });
+</script>
+</body>
+</html>

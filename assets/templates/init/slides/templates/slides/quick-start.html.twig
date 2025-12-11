@@ -1,0 +1,21 @@
+{% extends "layouts/centered.html.twig" %}
+
+{% block title %}{{ "quickstart.title" | trans }}{% endblock %}
+{% block heading %}{{ "quickstart.title" | trans }}{% endblock %}
+
+{% block content %}
+<p>{{ "quickstart.description" | trans }}</p>
+
+<pre><code class="language-bash"># Build your presentation
+slides build
+
+# Auto-rebuild on changes
+slides watch
+
+# Export to PDF
+slides export
+
+# Open output/slide-1.html in your browser</code></pre>
+{% endblock %}
+
+{% block notes %}{{ "quickstart.notes" | trans }}{% endblock %}

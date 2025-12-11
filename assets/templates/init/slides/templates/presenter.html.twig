@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ "presenter.title" | trans }} - {{ "presenter.slide" | trans }} {{ slide.current }}</title>
+    <link rel="stylesheet" href="{{ asset('css/presenter.css') }}">
+</head>
+<body data-current="{{ slide.current }}" data-total="{{ app.total }}">
+<div class="presenter">
+    <div class="current">
+        <iframe src="../slide-{{ slide.current }}.html"></iframe>
+    </div>
+    <div class="next">
+        {% if not slide.isLast %}
+            <img src="../thumbnails/slide-{{ slide.next }}.png" alt="Next">
+        {% else %}
+            <div class="last-slide"><em>{{ "presenter.last_slide" | trans | default("Last slide") }}</em></div>
+        {% endif %}
+    </div>
+    <div class="notes">
+        <h3>{{ "presenter.notes" | trans }}</h3>
+        <div class="notes-content">
+            {% if notes %}
+                {{ notes | safe }}
+            {% else %}
+                <em>{{ "presenter.no_notes" | trans }}</em>
+            {% endif %}
+        </div>
+    </div>
+    <footer class="footer">
+        <div>{{ "presenter.slide" | trans }} {{ slide.current }} / {{ app.total }}</div>
+        <div class="timer" id="timer">00:00:00</div>
+        <div class="clock" id="clock"></div>
+        <div class="nav">
+            {% if not slide.isFirst %}
+                <a href="slide-{{ slide.prev }}.html" class="nav-btn">{{ "nav.prev" | trans }}</a>
+            {% else %}
+                <span class="nav-btn disabled">{{ "nav.prev" | trans }}</span>
+            {% endif %}
+            {% if not slide.isLast %}
+                <a href="slide-{{ slide.next }}.html" class="nav-btn">{{ "nav.next" | trans }}</a>
+            {% else %}
+                <span class="nav-btn disabled">{{ "nav.next" | trans }}</span>
+            {% endif %}
+            <a href="../slide-{{ slide.current }}.html" class="nav-btn">{{ "nav.exit" | trans }}</a>
+        </div>
+    </footer>
+</div>
+
+<script src="{{ asset('js/presenter.js') }}"></script>
+</body>
+</html>
